@@ -1,0 +1,17 @@
+{
+  "name": "simulador-de-panqueca-fofa",
+  "version": "1.0.0",
+  "description": "Um simulador simples para criar panquecas fofas virtuais",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "commander": "^11.0.0",
+    "blessed": "^0.1.81",
+    "open": "^9.1.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

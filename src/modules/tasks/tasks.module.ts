@@ -15,7 +15,7 @@ import { IntegrationsModule } from '../integrations/integrations.module';
       name: 'tasks',
     }),
     AgentsModule,
-    IntegrationsModule,
+    EventsModule,
   ],
   controllers: [TasksController],
   providers: [TasksService, TaskProcessor],

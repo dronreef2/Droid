@@ -5,6 +5,7 @@ import { NotFoundException, BadRequestException } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { Task, TaskStatus, TaskPriority } from './entities/task.entity';
 import { AgentsService } from '../agents/agents.service';
+import { EventsService } from '../../events/events.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 
 describe('TasksService', () => {
@@ -58,6 +59,10 @@ describe('TasksService', () => {
     findOne: jest.fn(),
   };
 
+  const mockEventsService = {
+    emitTaskEvent: jest.fn(),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -73,6 +78,10 @@ describe('TasksService', () => {
         {
           provide: AgentsService,
           useValue: mockAgentsService,
+        },
+        {
+          provide: EventsService,
+          useValue: mockEventsService,
         },
       ],
     }).compile();

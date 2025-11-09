@@ -8,6 +8,7 @@ import { UsersModule } from './modules/users/users.module';
 import { AgentsModule } from './modules/agents/agents.module';
 import { TasksModule } from './modules/tasks/tasks.module';
 import { IntegrationsModule } from './modules/integrations/integrations.module';
+import { EventsModule } from './events/events.module';
 import { databaseConfig } from './config/database.config';
 import { redisConfig } from './config/redis.config';
 import { appConfig } from './config/app.config';
@@ -61,6 +62,7 @@ import { appConfig } from './config/app.config';
     AgentsModule,
     TasksModule,
     IntegrationsModule,
+    EventsModule,
   ],
 })
 export class AppModule {}

@@ -11,6 +11,8 @@ import { Task, TaskStatus, TaskPriority } from './entities/task.entity';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { AgentsService } from '../agents/agents.service';
+import { EventsService } from '../../events/events.service';
+import { TaskEventType } from '../../events/dto/task-event.dto';
 
 @Injectable()
 export class TasksService {
@@ -20,6 +22,7 @@ export class TasksService {
     @InjectQueue('tasks')
     private tasksQueue: Queue,
     private agentsService: AgentsService,
+    private eventsService: EventsService,
   ) {}
 
   async create(createTaskDto: CreateTaskDto, userId: string): Promise<Task> {
@@ -42,6 +45,17 @@ export class TasksService {
     });
 
     const savedTask = await this.tasksRepository.save(task);
+
+    // Emitir evento de task criada
+    this.eventsService.emitTaskEvent(TaskEventType.TASK_CREATED, {
+      taskId: savedTask.id,
+      userId: savedTask.userId,
+      agentId: savedTask.agentId,
+      status: savedTask.status,
+      priority: savedTask.priority,
+      prompt: savedTask.prompt,
+      createdAt: savedTask.createdAt,
+    });
 
     // Adicionar à fila para processamento
     await this.tasksQueue.add(
@@ -183,7 +197,35 @@ export class TasksService {
       Object.assign(task, data);
     }
 
-    return this.tasksRepository.save(task);
+    const savedTask = await this.tasksRepository.save(task);
+
+    // Emitir evento baseado no status
+    const eventTypeMap: Record<TaskStatus, TaskEventType | undefined> = {
+      [TaskStatus.PENDING]: undefined,
+      [TaskStatus.PROCESSING]: TaskEventType.TASK_PROCESSING,
+      [TaskStatus.COMPLETED]: TaskEventType.TASK_COMPLETED,
+      [TaskStatus.FAILED]: TaskEventType.TASK_FAILED,
+      [TaskStatus.CANCELLED]: TaskEventType.TASK_CANCELLED,
+    };
+
+    const eventType = eventTypeMap[status];
+    if (eventType) {
+      this.eventsService.emitTaskEvent(eventType, {
+        taskId: savedTask.id,
+        userId: savedTask.userId,
+        agentId: savedTask.agentId,
+        status: savedTask.status,
+        response: savedTask.response,
+        error: savedTask.error,
+        tokensUsed: savedTask.tokensUsed,
+        executionTimeMs: savedTask.executionTimeMs,
+        retryCount: savedTask.retryCount,
+        completedAt: savedTask.completedAt,
+        updatedAt: savedTask.updatedAt,
+      });
+    }
+
+    return savedTask;
   }
 
   async getStats(userId: string): Promise<any> {

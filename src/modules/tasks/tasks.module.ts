@@ -6,6 +6,7 @@ import { TasksService } from './tasks.service';
 import { Task } from './entities/task.entity';
 import { TaskProcessor } from './processors/task.processor';
 import { AgentsModule } from '../agents/agents.module';
+import { IntegrationsModule } from '../integrations/integrations.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { AgentsModule } from '../agents/agents.module';
       name: 'tasks',
     }),
     AgentsModule,
+    IntegrationsModule,
   ],
   controllers: [TasksController],
   providers: [TasksService, TaskProcessor],

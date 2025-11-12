@@ -1,3 +1,5 @@
+app.factory.ai
+
 # 🤖 Droid AI Agents
 
 [![CI](https://github.com/dronreef2/Droid/actions/workflows/ci.yml/badge.svg)](https://github.com/dronreef2/Droid/actions/workflows/ci.yml)
@@ -7,7 +9,7 @@
 [![NestJS](https://img.shields.io/badge/NestJS-10-red.svg)](https://nestjs.com/)
 
 Sistema avançado de gerenciamento e orquestração de agentes de IA com integração LLM. Arquitetura enterprise-grade construída com NestJS, TypeScript, PostgreSQL e Redis.
-app.factory.ai
+
 ## 🚀 Características
 
 - **Arquitetura Modular**: Estrutura bem organizada seguindo padrões de arquitetura limpa

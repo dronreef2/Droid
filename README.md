@@ -1,5 +1,11 @@
 # 🤖 Droid AI Agents
 
+[![CI](https://github.com/dronreef2/Droid/actions/workflows/ci.yml/badge.svg)](https://github.com/dronreef2/Droid/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/dronreef2/Droid/actions/workflows/codeql.yml/badge.svg)](https://github.com/dronreef2/Droid/actions/workflows/codeql.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
+[![NestJS](https://img.shields.io/badge/NestJS-10-red.svg)](https://nestjs.com/)
+
 Sistema avançado de gerenciamento e orquestração de agentes de IA com integração LLM. Arquitetura enterprise-grade construída com NestJS, TypeScript, PostgreSQL e Redis.
 
 ## 🚀 Características

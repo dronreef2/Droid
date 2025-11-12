@@ -1,0 +1,54 @@
+# Auto-labeling configuration for PRs
+
+# Documentation changes
+documentation:
+  - '**/*.md'
+  - 'docs/**/*'
+
+# Dependencies
+dependencies:
+  - 'package.json'
+  - 'package-lock.json'
+
+# Configuration
+config:
+  - '**/*.config.js'
+  - '**/*.config.ts'
+  - '.env.example'
+  - 'tsconfig.json'
+
+# CI/CD
+ci-cd:
+  - '.github/**/*'
+  - 'Dockerfile'
+  - 'docker-compose.yml'
+
+# Tests
+tests:
+  - '**/*.spec.ts'
+  - '**/*.test.ts'
+  - 'test/**/*'
+
+# Backend/API
+backend:
+  - 'src/**/*.ts'
+  - '!src/**/*.spec.ts'
+
+# Modules
+module:auth:
+  - 'src/modules/auth/**/*'
+
+module:users:
+  - 'src/modules/users/**/*'
+
+module:agents:
+  - 'src/modules/agents/**/*'
+
+module:tasks:
+  - 'src/modules/tasks/**/*'
+
+module:integrations:
+  - 'src/modules/integrations/**/*'
+
+module:events:
+  - 'src/events/**/*'

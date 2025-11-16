@@ -22,6 +22,32 @@ Sistema avançado de gerenciamento e orquestração de agentes de IA com integra
 - **Testes**: Configuração completa com Jest
 - **Logs Estruturados**: Interceptors para logging detalhado
 - **Error Handling**: Tratamento global de erros
+- **Security First**: Proteção contra exposição de secrets e vulnerabilidades
+
+## 🔒 Segurança
+
+Este projeto implementa múltiplas camadas de segurança:
+
+- 🔐 Autenticação JWT com tokens seguros
+- 🛡️ Validação de entrada com class-validator
+- 🔍 Scanning automático de secrets no CI/CD
+- 🚨 CodeQL para análise de vulnerabilidades
+- 📝 Documentação completa de segurança
+- ⚠️ Prevenção de SQL injection via TypeORM
+- 🔑 Gestão segura de secrets e API keys
+
+**Documentação de Segurança:**
+- [SECURITY.md](SECURITY.md) - Política de segurança e reporte de vulnerabilidades
+- [docs/SECURITY_BEST_PRACTICES.md](docs/SECURITY_BEST_PRACTICES.md) - Guia completo
+- [docs/PRE_COMMIT_HOOKS.md](docs/PRE_COMMIT_HOOKS.md) - Configuração de hooks
+
+### Secrets Conhecidos como Comprometidos
+
+⚠️ Os seguintes secrets foram **expostos acidentalmente** e estão documentados como comprometidos:
+- SESSION_SECRET: `jYbS0m7xBY...` (início do valor)
+- GEMINI_API_KEY: `AIzaSyAJMqJy6WejEwQ3JgHx1hv9FQxdfoAe3FU`
+
+**Estes secrets NUNCA devem ser utilizados.** Se você os encontrar em qualquer configuração, substitua imediatamente. Veja [SECURITY.md](SECURITY.md) para detalhes.
 
 ## 📋 Pré-requisitos
 
@@ -168,12 +194,32 @@ src/
 
 ## 🔐 Variáveis de Ambiente
 
+**⚠️ IMPORTANTE: Segurança de Secrets**
+
 Veja o arquivo `.env.example` para todas as variáveis disponíveis:
 
 - Configurações da aplicação (porta, CORS, JWT)
 - Configurações de banco de dados
 - Configurações de Redis
 - Chaves de API para integrações LLM
+
+**NUNCA comite arquivos `.env` ou exponha secrets!** Veja [SECURITY.md](SECURITY.md) e [docs/SECURITY_BEST_PRACTICES.md](docs/SECURITY_BEST_PRACTICES.md) para mais informações.
+
+### Configuração Rápida
+
+```bash
+# 1. Copie o template
+cp .env.example .env
+
+# 2. Gere secrets seguros (NUNCA use os valores de exemplo!)
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+
+# 3. Edite .env com seus valores
+nano .env
+
+# 4. Verifique que .env está no .gitignore
+git check-ignore .env  # Deve retornar: .env
+```
 
 ## 📦 Scripts NPM
 
@@ -193,9 +239,22 @@ Veja o arquivo `.env.example` para todas as variáveis disponíveis:
 
 1. Fork o projeto
 2. Crie sua feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
+3. **Certifique-se de seguir as práticas de segurança** (veja [SECURITY.md](SECURITY.md))
+4. Commit suas mudanças (`git commit -m 'feat: Add some AmazingFeature'`)
+5. Push para a branch (`git push origin feature/AmazingFeature`)
+6. Abra um Pull Request
+
+### Diretrizes de Segurança para Contribuidores
+
+- ❌ **NUNCA** comite secrets, API keys ou credenciais
+- ✅ Use `.env` para variáveis sensíveis (já está no `.gitignore`)
+- ✅ Gere novos secrets - não reutilize exemplos
+- ✅ Revise suas mudanças antes do commit: `git diff`
+- ✅ Configure pre-commit hooks (veja [docs/PRE_COMMIT_HOOKS.md](docs/PRE_COMMIT_HOOKS.md))
+
+Para mais detalhes, consulte:
+- [SECURITY.md](SECURITY.md) - Política de segurança
+- [docs/SECURITY_BEST_PRACTICES.md](docs/SECURITY_BEST_PRACTICES.md) - Guia completo de segurança
 
 ## 📝 Roadmap
 
